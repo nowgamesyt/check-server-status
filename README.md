@@ -18,4 +18,4 @@
 
 ### 效果：
 
-![Main](https://github.com/p1rox/Check-Server-Status/raw/master/img/main.png)
+![Main](https://github.com/liluoao/check-server-status/raw/master/img/main.png)
