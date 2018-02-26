@@ -1,6 +1,4 @@
-# Check Server Status
-
-判断服务器状态
+# 判断服务器状态:mag:
 
 ### 配置
 
