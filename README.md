@@ -8,14 +8,14 @@
 
 ```xml
 <servers>
-	<server id="42">
-		<name>Home Server</name>
-		<host>myserver.com</host>
-		<port>80</port>
-	</server>
+    <server id="42">
+        <name>Home Server</name>
+        <host>myserver.com</host>
+        <port>80</port>
+    </server>
 </servers>
 ``` 
 
 ### 效果：
 
-![Main](https://github.com/liluoao/check-server-status/raw/master/img/main.png)
+![Main](https://github.com/liluoao/check-server-status/raw/master/img/example.png)
