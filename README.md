@@ -1,4 +1,5 @@
 # 判断服务器状态:mag:
+![https://github.styleci.io/analyses/86la9o#](https://github.styleci.io/repos/122904904/shield?branch=master)
 
 ### 配置
 
