@@ -1,5 +1,7 @@
 <?php
-function getStatus($ip, $port) {
+
+function getStatus($ip, $port)
+{
     $socket = @fsockopen($ip, $port, $errorNo, $errorStr, 2);
     if (!$socket) {
         return false;
@@ -8,13 +10,14 @@ function getStatus($ip, $port) {
     }
 }
 
-function parser() {
-    $servers = simplexml_load_file("servers.xml");
+function parser()
+{
+    $servers = simplexml_load_file('servers.xml');
     foreach ($servers as $server) {
-        if (getStatus((string)$server->ip, (string)$server->port)) {
-            $server->online = "true";
+        if (getStatus((string) $server->ip, (string) $server->port)) {
+            $server->online = 'true';
         } else {
-            $server->online = "false";
+            $server->online = 'false';
         }
     }
 

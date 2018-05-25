@@ -9,8 +9,8 @@ if (isset($_POST['name']) && isset($_POST['host'])) {
     addServer($_POST['name'], $_POST['host'], $port);
 
     header('Location: index.php');
-} else if (isset($_GET['del'])) {
-    $index = (int)$_GET['del'];
+} elseif (isset($_GET['del'])) {
+    $index = (int) $_GET['del'];
     if ($index >= 0) {
         deleteServer($index);
     }
@@ -65,7 +65,8 @@ if (isset($_POST['name']) && isset($_POST['host'])) {
     </html>
 <?php
 
-function getStatus($ip, $port) {
+function getStatus($ip, $port)
+{
     $socket = @fsockopen($ip, $port, $errorNo, $errorStr, 2);
     if (!$socket) {
         return false;
@@ -74,16 +75,17 @@ function getStatus($ip, $port) {
     }
 }
 
-function addServer($name, $host, $port) {
+function addServer($name, $host, $port)
+{
     // TODO : rewrite the opening part correctly (better errors management)
     $i = 0;
     $filename = 'servers.xml';
 
-    $servers = file_get_contents("servers.xml");
+    $servers = file_get_contents('servers.xml');
     if (trim($servers) == '') {
         exit();
     } else {
-        $servers = simplexml_load_file("servers.xml");
+        $servers = simplexml_load_file('servers.xml');
         foreach ($servers as $server) {
             $i++;
         }
@@ -92,58 +94,59 @@ function addServer($name, $host, $port) {
     $servers = simplexml_load_file($filename);
     $server = $servers->addChild('server');
 
-    $server->addAttribute('id', (string)$i);
+    $server->addAttribute('id', (string) $i);
     if (strlen($name) == 0) {
         $name = $host;
     }
-    $server->addChild('name', (string)$name);
-    $server->addChild('host', (string)$host);
-    $server->addChild('port', (string)$port);
+    $server->addChild('name', (string) $name);
+    $server->addChild('host', (string) $host);
+    $server->addChild('port', (string) $port);
     $servers->asXML($filename);
 }
 
-function parser() {
+function parser()
+{
     //TODO : Fix errors when no valid XML content inside file.
-    $file = "servers.xml";
+    $file = 'servers.xml';
     if (file_exists($file)) {
-        $servers = file_get_contents("servers.xml");
-        if (trim($servers) == '') //File exists but empty
-        {
-            $content = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><servers></servers>";
+        $servers = file_get_contents('servers.xml');
+        if (trim($servers) == '') { //File exists but empty
+            $content = '<?xml version="1.0" encoding="UTF-8"?><servers></servers>';
             file_put_contents($file, $content, FILE_APPEND | LOCK_EX);
         } else {
-            $servers = simplexml_load_file("servers.xml");
+            $servers = simplexml_load_file('servers.xml');
             foreach ($servers as $server) {
-                echo "<tr>";
-                echo "<td>" . $server->name . "</td>";
+                echo '<tr>';
+                echo '<td>'.$server->name.'</td>';
                 if (filter_var($server->host, FILTER_VALIDATE_IP)) {
-                    echo "<td class=\"text-center\">N/A</td><td class=\"text-center\">" . $server->host . "</td>";
+                    echo '<td class="text-center">N/A</td><td class="text-center">'.$server->host.'</td>';
                 } else {
-                    echo "<td class=\"text-center\">" . $server->host . "</td><td class=\"text-center\">" . gethostbyname($server->host) . "</td>";
+                    echo '<td class="text-center">'.$server->host.'</td><td class="text-center">'.gethostbyname($server->host).'</td>';
                 }
 
-                echo "<td class=\"text-center\">" . $server->port . "</td>";
+                echo '<td class="text-center">'.$server->port.'</td>';
 
-                if (getStatus((string)$server->host, (string)$server->port)) {
-                    echo "<td class=\"text-center\"><span class=\"label label-success\">Online</span></td>";
+                if (getStatus((string) $server->host, (string) $server->port)) {
+                    echo '<td class="text-center"><span class="label label-success">Online</span></td>';
                 } else {
-                    echo "<td class=\"text-center\"><span class=\"label label-danger\">Offline</span></td>";
+                    echo '<td class="text-center"><span class="label label-danger">Offline</span></td>';
                 }
-                echo "<td class=\"text-center deleteMode\"><a href=\"index.php?del=" . $server->attributes() . "\" style=\"text-decoration:none\"><b style=\"color:red;\">X</b></a></td>";
-                echo "</tr>";
+                echo '<td class="text-center deleteMode"><a href="index.php?del='.$server->attributes().'" style="text-decoration:none"><b style="color:red;">X</b></a></td>';
+                echo '</tr>';
             }
         }
     } else {
         // TODO : detect creation errors (ex : permissions)
-        $content = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><servers></servers>";
+        $content = '<?xml version="1.0" encoding="UTF-8"?><servers></servers>';
         file_put_contents($file, $content, FILE_APPEND | LOCK_EX);
     }
 }
 
-function deleteServer($index) {
-    $file = "servers.xml";
+function deleteServer($index)
+{
+    $file = 'servers.xml';
 
-    $serverFile = new DOMDocument;
+    $serverFile = new DOMDocument();
     $serverFile->formatOutput = true;
     $serverFile->load($file);
     $servers = $serverFile->documentElement;
@@ -152,7 +155,7 @@ function deleteServer($index) {
 
     foreach ($list as $server) {
         $attrValue = $server->getAttribute('id');
-        if ((int)$attrValue == $index) {
+        if ((int) $attrValue == $index) {
             $nodeToRemove = $server;
         }
     }
