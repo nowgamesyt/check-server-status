@@ -28,18 +28,6 @@ if (isset($_POST['name']) && isset($_POST['host'])) {
     <body>
     <div class="container">
         <h3>Server(s) Status</h3>
-        <table class="table table-bordered">
-            <tr>
-                <th class="text-center">Name</th>
-                <th class="text-center">Domain</th>
-                <th class="text-center">IP</th>
-                <th class="text-center">Port</th>
-                <th class="text-center">Status</th>
-                <th class="text-center deleteMode" style="width:75px">Delete</th>
-            </tr>
-            <?php parser(); ?>
-        </table>
-        <input id="editMode" type="button" value="Edit mode" checked="checked" class="btn btn-default pull-right"/>
         <form class="form-inline" role="form" action="index.php" method="post">
             <div class="form-group">
                 <input type="text" class="form-control" id="name" name="name" placeholder="Name">
